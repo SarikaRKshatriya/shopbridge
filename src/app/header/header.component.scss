@@ -1,0 +1,22 @@
+header{
+    background-color: #cccccc;
+    height: 100px;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: relative;
+    background-image: url("/assets/images/header.jfif");
+    text-align: center;
+}
+
+.care{
+    color: #f36f25;
+    font-weight: 600;
+    font-size: 50px;
+    padding: 20px 0;
+    display: inline-block;
+    text-align: center;
+    letter-spacing: -7px;
+    //text-transform: uppercase;
+}
+

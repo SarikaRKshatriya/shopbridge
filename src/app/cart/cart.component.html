@@ -1,0 +1,78 @@
+<div style="display:flex;">
+ 
+    <button (click)="wishList()" style="margin-left: 80%;margin-top: 20px;font-weight: 600;
+    font-size: 15px;">
+            <i class="fa fa-heart"> Wish List</i>
+    </button>
+   
+ </div>
+<div class="container">
+        <table>
+            <caption>Purchase Details</caption>
+            <thead>
+                <tr style="background-color: grey;">
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Price</th>
+                    <th>Quantity</th>
+                    <th>Subtotal</th>
+                    <th>Action</th>
+
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor= "let cart of cartData">
+                    <td>
+                        {{cart.id}}
+                    </td>
+                    <td>
+                        {{cart.name}}
+                    </td>
+                    <td>
+                        ₹{{cart.price}}
+                    </td>
+                    <td><button (click)="addQuantity(cart.id)"> + </button>
+                        {{cart.quantity}}
+                        <button (click)="removeQuantity(cart.id)"> - </button>
+                     </td>   
+                    <td>
+                        ₹{{cart.price * cart.quantity}}
+                    </td>
+                    <td>
+                        <button (click)="removeProduct(cart.id)"><i class="fa fa-trash-o"> Remove</i> </button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+   <div style="margin-left: 50%;margin-top: 10px;margin-right: 20%;">
+   <span style="font-size: 20px;">Total Amount:₹{{total}}</span>
+   <div style="float: right;">
+    <button (click) = "checkoutConfirm()" >Checkout</button><br> <span>*Cash On Delivery</span>
+   </div>
+  
+   </div>
+ 
+       
+</div>
+<div id="delete-confirm" class="del-modal">
+	<div class="del-modal-content">
+	  <div style="margin: 20px; text-align: center">
+		Are you sure you want to delete selected item?
+	  </div>
+	  <div style="text-align: center">
+		<button class="delete-submit" (click)="delete()">Yes</button>
+		<button class="cancel" (click)="deleteClose()">No</button>
+	  </div>
+	</div>
+  </div>
+  <div id="checkout-confirm" class="del-modal">
+	<div class="del-modal-content">
+	  <div style="margin: 20px; text-align: center">
+		Are you sure you want to order selected item?
+	  </div>
+	  <div style="text-align: center">
+		<button class="delete-submit" (click)="checkout()">Yes</button>
+		<button class="cancel" (click)="checkoutClose()">No</button>
+	  </div>
+	</div>
+  </div>

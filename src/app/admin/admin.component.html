@@ -1,0 +1,445 @@
+<div style="display:flex;float:right;margin-top: 20px;font-weight: 600;font-size: 15px;margin-right:10%;">
+
+    <button (click)="addProducts()">
+           Add Product
+   </button>
+    <button (click)="products()">
+           Product List
+   </button>
+   <button (click)="users()">
+           Users List
+   </button>
+
+</div>
+
+<div class="container" *ngIf="isProduct">
+  <div style="display:flex;">
+    <input type="text" [(ngModel)]="searchValue" placeholder="Search By Product Name" style="width: 30%;height: 10px; margin-top: -5px;">
+    <button (click)="searchByName()" style="width: 30%;    margin-top: -5px;
+    height: 23px;">
+        Search by Product Name
+    </button>
+   
+   <div style="margin-top: -5px;color:#f36f25;">
+    <label style="padding: 0px;font-size: 18px;">Filterby Category: </label>
+    <select (change)="SearchByCategory($event.target.value)" style="height:23px;color:#f36f25;border-color: #f36f25;">
+      <option value="0">--All--</option>
+      <option *ngFor="let category of categories" value={{category}}>
+        {{category}}
+      </option>
+    </select>
+  </div>
+    
+  </div>
+     <div class="grid" id="list" style="margin-left: 10px;">
+      <ul *ngFor="let product of productData | paginate: { itemsPerPage: pageSize, currentPage: currentPage,totalItems: total }">
+        <li><img src="assets/images/{{product.id}}.webp" width="150" height="200"></li>
+        <li>{{product.name}}</li>
+        <li>{{product.description}}</li>
+        <li>{{product.category}}</li>
+        <li><strong>₹{{product.price}}</strong></li>
+        <li>
+        <a (click)="editProduct(product.id)"><i class="fa fa-edit" style="color: #f36f25;margin-right: 10px;"></i> </a>
+        <a (click)="removeProduct(product.id)"><i class="fa fa-trash-o" style="color: #f36f25;margin-right: 10px;"></i> </a>
+      </li>
+      </ul>
+   </div>
+
+</div>
+<div *ngIf="isProduct" style="margin-left: 40%;">
+  <pagination-controls  (pageChange)="currentPage = $event"></pagination-controls>
+</div>
+
+
+<div class="container" *ngIf="!isProduct">
+    <table>
+        <caption>Users Details</caption>
+        <thead>
+            <tr style="background-color: grey;">
+                <th>Name</th>
+                <th>Email</th>
+                <th>Phone</th>
+                <th>Address</th>
+                <th>City</th>
+                <th>Pin</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor= "let user of usersData">
+                <td>
+                    {{user.name}}
+                </td>
+                <td>
+                    {{user.email}}
+                </td>
+                <td>
+                    {{user.phone}}
+                </td>
+                <td>
+                    {{user.address}}
+                 </td>   
+                <td>
+                    {{user.city}}
+                </td>
+                <td>
+                    {{user.pin}}
+                </td>
+                <td>
+                    <a (click)="removeUser(user.email)"><i class="fa fa-trash-o" style="color: #f36f25;margin-right: 10px;"></i> </a>
+               </td>
+            </tr>
+        </tbody>
+    </table>
+
+</div>
+<div id="delete-confirm" class="del-modal">
+    <div class="del-modal-content">
+      <div style="margin: 20px; text-align: center">
+        Are you sure you want to delete selected item?
+      </div>
+      <div style="text-align: center">
+        <button (click)="delete()">Yes</button>
+        <button (click)="deleteClose()">No</button>
+      </div>
+    </div>
+  </div>
+  <div id="delete-user-confirm" class="del-modal">
+     <div class="del-modal-content">
+      <div style="margin: 20px; text-align: center">
+        Are you sure you want to delete selected user?
+      </div>
+      <div style="text-align: center">
+        <button (click)="deleteSelectedUser()">Yes</button>
+        <button (click)="deleteUserClose()">No</button>
+      </div>
+    </div>
+  </div> 
+  <div id="add-form" class="modal">
+    <form
+      class="modal-content animate"
+      (ngSubmit)="add(addForm.form)"
+      #addForm="ngForm"
+    >
+      <div
+        style="
+          display: flex;
+          background-color: #f1f1f1;
+          justify-content: space-between;
+          color: #fefefe;
+            background-color: #f36f25;
+        "
+      >
+        <h3>Add Product information</h3>
+        <span
+          onclick="document.getElementById('add-form').style.display='none'"
+          class="close"
+          title="Close Modal"
+          style="font-size: 40px;
+          margin: 5px;cursor: pointer;"
+          >&times;</span
+        >
+      </div>
+      <div class="form-group">
+        <label for="ID">ID</label>
+        <input
+          type="text"
+          class="form-control"
+          required
+          pattern="[0-9]*"
+          ngModel
+          name="id"
+          #id="ngModel"
+        />
+        <div
+          [hidden]="id.valid || id.pristine"
+          class="alert alert-danger"
+        >
+          <div class="error" [hidden]="!id.hasError('required')">
+            Id is required
+          </div>
+          <div class="error" [hidden]="!id.hasError('pattern')">
+            Only numbers allowed
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="name">Name</label>
+        <input
+          type="text"
+          class="form-control"
+          required
+          pattern="[a-zA-Z]|[a-zA-Z]"
+          ngModel
+          name="name"
+          #name="ngModel"
+        />
+        <div
+          [hidden]="name.valid || name.pristine"
+          class="alert alert-danger"
+        >
+          <div class="error" [hidden]="!name.hasError('required')">
+            Name is required
+          </div>
+          <div class="error" [hidden]="!name.hasError('pattern')">
+            Only alphabets allowed
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="name">Description</label>
+        <input
+          type="text"
+          class="form-control"
+          required
+          ngModel
+          name="description"
+          #description="ngModel"
+        />
+        <div
+          class="error"
+          [hidden]="description.valid || description.pristine"
+          class="alert alert-danger"
+        >
+          <div class="error" [hidden]="!description.hasError('required')">
+            Description is required
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="name">Price</label>
+        <input
+          type="text"
+          class="form-control"
+          required
+          ngModel
+          name="price"
+          pattern="[0-9]*"
+          #price="ngModel"
+        />
+      </div>
+      <div
+        class="error"
+        [hidden]="price.valid || price.pristine"
+        class="alert alert-danger"
+      >
+        <div class="error" [hidden]="!price.hasError('required')">
+            Price is required
+        </div>
+        <div class="error" [hidden]="!price.hasError('pattern')">
+            Price should be only numbers
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Category</label>
+        <label for="Covid" style>
+            <input
+              class="form-control"
+              type="radio"
+              name="category"
+              value="covid"
+              ngModel
+            />
+            Covid
+          </label>
+          <label for="Diabetes">
+            <input
+              class="form-control"
+              type="radio"
+              name="category"
+              value="diabetes"
+              ngModel
+            />
+            Diabetes
+          </label>
+        <label for="Vitamin">
+          <input
+            class="form-control"
+            type="radio"
+            name="category"
+            value="vitamin"
+            ngModel
+          />
+          Vitamin
+        </label>
+        <label for="None">
+          <input
+            class="form-control"
+            type="radio"
+            name="category"
+            value="none"
+            ngModel
+          />
+          None
+        </label>
+      </div>
+      <span style="margin: 20px;
+      color: red;">* Please save picture of the product in /assets/images folder and save it as a above id and extension .webp</span><br>
+      <button class="submit" type="submit" [disabled]="!addForm.form.valid" style="    margin-left: 5%;
+      margin-bottom: 20px;">
+        Submit
+      </button>
+    </form>
+  </div>
+  <div id="edit-form" class="modal">
+    <form
+      class="modal-content animate"
+      (ngSubmit)="edit(editForm.form.value)"
+      #editForm="ngForm"
+    >
+      <div
+        style="
+          display: flex;
+          background-color: #f1f1f1;
+          justify-content: space-between;
+          color: #fefefe;
+            background-color: #f36f25;
+        "
+      >
+        <h3>Edit Product Details</h3>
+        <span
+          onclick="document.getElementById('edit-form').style.display='none'"
+          class="close"
+          title="Close Modal"
+          style="font-size: 40px;
+          margin: 5px;cursor: pointer;"
+          >&times;</span
+        >
+      </div>
+      <div class="form-group">
+        <label for="ID">ID</label>
+        <input
+          type="text"
+          class="form-control"
+          required
+          pattern="[0-9]*"
+          ngModel ="{{selectedID}}"
+          name="id"
+          #id="ngModel"
+          readonly
+        />
+      </div>
+      <div class="form-group">
+        <label for="name">Name</label>
+        <input
+          type="text"
+          class="form-control"
+          required
+          pattern="[a-zA-Z]|[a-zA-Z]"
+          ngModel ={{selectedName}}
+          name="name"
+          #name="ngModel"
+        />
+        <div
+          [hidden]="name.valid || name.pristine"
+          class="alert alert-danger"
+        >
+          <div class="error" [hidden]="!name.hasError('required')">
+            Name is required
+          </div>
+          <div class="error" [hidden]="!name.hasError('pattern')">
+            Only alphabets allowed
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="name">Description</label>
+        <input
+          type="text"
+          class="form-control"
+          required
+          ngModel = {{selectedDescription}}
+          name="description"
+          #description="ngModel"
+        />
+        <div
+          class="error"
+          [hidden]="description.valid || description.pristine"
+          class="alert alert-danger"
+        >
+          <div class="error" [hidden]="!description.hasError('required')">
+            Description is required
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="name">Price</label>
+        <input
+          type="text"
+          class="form-control"
+          required
+          ngModel = {{selectedPrice}}
+          name="price"
+          pattern="[0-9]*"
+          #price="ngModel"
+        />
+      </div>
+      <div
+        class="error"
+        [hidden]="price.valid || price.pristine"
+        class="alert alert-danger"
+      >
+        <div class="error" [hidden]="!price.hasError('required')">
+            Price is required
+        </div>
+        <div class="error" [hidden]="!price.hasError('pattern')">
+            Price should be only numbers
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Category</label>
+        <label for="Covid" style>
+            <input
+              class="form-control"
+              type="radio"
+              name="category"
+              value="covid"
+              ngModel = {{selectedCategory}}
+              [checked] = "selectedCategory == 'covid'"
+            />
+            Covid
+          </label>
+          <label for="Diabetes">
+            <input
+              class="form-control"
+              type="radio"
+              name="category"
+              value="diabetes"
+              ngModel = {{selectedCategory}}
+              [checked] = "selectedCategory == 'diabetes'"
+            />
+            Diabetes
+          </label>
+        <label for="Vitamin">
+          <input
+            class="form-control"
+            type="radio"
+            name="category"
+            value="vitamin"
+            ngModel = {{selectedCategory}}
+            [checked] = "selectedCategory == 'vitamin'"
+          />
+          Vitamin
+        </label>
+        <label for="None">
+          <input
+            class="form-control"
+            type="radio"
+            name="category"
+            value="none"
+            ngModel = {{selectedCategory}}
+            [checked] = "selectedCategory == 'none'"
+          />
+          None
+        </label>
+      </div>
+      <span style="margin: 20px;
+      color: red;">* Please save picture of the product in /assets/images folder and save it as a above id and extension .webp</span><br>
+      <button class="submit" type="submit" [disabled]="!editForm.form.valid" style="    margin-left: 5%;
+      margin-bottom: 20px;">
+        Submit
+      </button>
+    </form>
+  </div>
+
+

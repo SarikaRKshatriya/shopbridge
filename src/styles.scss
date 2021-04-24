@@ -1,1 +1,178 @@
 /* You can add global styles to this file, and also import other style files */
+img{
+    padding-top: 10px;
+}
+li {
+list-style: none;
+}
+@media screen and (max-width: 600px) {
+.grid {
+width: 100%;
+display: block;
+margin-bottom: 20px;
+}
+}
+table {
+width:80%;
+margin:15px;
+}
+table, th, td {
+border: 1px solid black;
+border-collapse: collapse;
+}
+th, td {
+padding: 15px;
+text-align: left;
+}
+tr:nth-child(even) {
+background-color: #eee;
+}
+tr:nth-child(odd) {
+background-color: #fff;
+}
+th {
+background-color: #f36f25;
+color: white;
+font-size: 20px;
+}
+
+.container{
+    height:800px;
+    width: 80%;
+    margin-left: 16%;
+    margin-top: 2%;
+}
+button {
+background-color: white;
+color: #f36f25;
+margin: 5px 5px 5px 5px;
+border: 1px solid #f36f25;
+cursor: pointer;
+border-radius: 5px;
+padding: 2px 13px;
+font-size: 15px;
+font-weight: 600;
+}
+label{
+    font-weight: 600;
+    padding: 20px;
+    width: 12% !important;
+}
+input[type="text"] {
+    width: 50%;
+    height: 30px;
+    padding: 6px 12px;
+    font-size: 14px;
+    line-height: 1.42857143;
+    color: #555;
+    background-color: #fff;
+    background-image: none;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  input[type="password"] {
+    width: 50%;
+    height: 34px;
+    padding: 6px 12px;
+    font-size: 14px;
+    line-height: 1.42857143;
+    color: #555;
+    background-color: #fff;
+    background-image: none;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  .error {
+    color: red;
+    margin-left: 20px;
+  }
+  button:hover {
+    opacity: 0.8;
+  }
+  .heading{
+    width: 60%;
+    border-bottom: 1px dashed #C1BEBE;
+    color: #23bdc3;
+    font-size: 22px;
+    font-weight: normal;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    text-transform: capitalize;
+    margin-left: 20%;
+  }
+  .form-group {
+    margin-bottom: 15px;
+    display: flex;
+    align-items: baseline;
+}
+
+caption{
+  font-size: 20px;
+  font-weight: 600;
+ }
+ .del-modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0, 0, 0); /* Fallback color */
+  background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
+  padding-top: 60px;
+}
+ /* Modal Content/Box */
+.del-modal-content {
+  background-color: #fefefe;
+  margin: 5% auto 15% auto;
+  border: 1px solid #888;
+  width: 30%;
+  box-shadow: 0 8px 8px 0 rgb(0 0 0 / 20%);
+}
+
+.delete-submit {
+  background-color: deepskyblue;
+  color: white;
+  margin: 0px 10px 10px 0px;
+  cursor: pointer;
+  border: 1px solid deepskyblue;
+}
+
+.delete-submit:hover {
+  opacity: 0.8;
+}
+@-webkit-keyframes animatezoom {
+  from {
+    -webkit-transform: scale(0);
+  }
+  to {
+    -webkit-transform: scale(1);
+  }
+}
+
+@keyframes animatezoom {
+  from {
+    transform: scale(0);
+  }
+  to {
+    transform: scale(1);
+  }
+}
+.grid
+  {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-gap: 20px;
+    align-items: end;
+    color: #23bdc3;
+    text-align: center;
+    width: 90%;
+    margin-left: 50px;
+    }
+    .grid > ul{
+    background-color: white;
+    padding: 0px;
+    box-shadow: 2px 2px 6px 0px rgba(0, 0, 0, 0.3);
+    }

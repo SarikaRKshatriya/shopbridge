@@ -1,0 +1,245 @@
+
+ <h1 class="heading">Add your personal information</h1>  
+ <div class="container">
+    <form
+      (ngSubmit)="addContact(addForm.form)"
+      #addForm="ngForm"
+    >
+    
+     
+      <div class="form-group">
+        <label for="name">Name</label>
+        <input
+          type="text"
+          class="form-control"
+          required
+          pattern="[a-zA-Z]|[a-zA-Z]"
+          ngModel
+          name="name"
+          #name="ngModel"
+        />
+        <div
+          [hidden]="name.valid || name.pristine"
+          class="alert alert-danger"
+        >
+          <div class="error" [hidden]="!name.hasError('required')">
+            First Name is required
+          </div>
+          <div class="error" [hidden]="!name.hasError('pattern')">
+            Only alphabets allowed
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="name">Email Address</label>
+        <input
+          type="text"
+          class="form-control"
+          required
+          ngModel
+          name="email"
+          pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$"
+          #email="ngModel"
+        />
+        <div
+          class="error"
+          [hidden]="email.valid || email.pristine"
+          class="alert alert-danger"
+        >
+          <div class="error" [hidden]="!email.hasError('required')">
+            Email is required
+          </div>
+          <div class="error" [hidden]="!email.hasError('pattern')">
+            Email format should be
+            <small><b>name@abc.com</b></small>
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="name">Phone Number</label>
+        <input
+          type="text"
+          class="form-control"
+          required
+          ngModel
+          name="phone"
+          pattern="[0-9]*"
+          minlength="10"
+          maxlength="10"
+          #phone="ngModel"
+        />
+      </div>
+      <div
+        class="error"
+        [hidden]="phone.valid || phone.pristine"
+        class="alert alert-danger"
+      >
+        <div class="error" [hidden]="!phone.hasError('minlength')">
+          Phone number should be minimum 10 digit
+        </div>
+        <div class="error" [hidden]="!phone.hasError('maxlength')">
+          Phone number should be maximum 10 digit
+        </div>
+        <div class="error" [hidden]="!phone.hasError('required')">
+          phone is required
+        </div>
+        <div class="error" [hidden]="!phone.hasError('pattern')">
+          Phone number should be only numbers
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="name">Enter Password</label>
+        <input
+          type="password"
+          class="form-control"
+          required
+          ngModel
+          name="password"
+          pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
+          minlength="8"
+          maxlength="20"
+          #password="ngModel"
+        />
+      </div>
+      <div
+        class="error"
+        [hidden]="password.valid || password.pristine"
+        class="alert alert-danger"
+      >
+        <div class="error" [hidden]="!password.hasError('minlength')">
+            Password number should be have minimum length 8 
+        </div>
+        <div class="error" [hidden]="!password.hasError('required')">
+            Password is required
+        </div>
+        <div class="error" [hidden]="!password.hasError('pattern')">
+            Password number should be combination of lowercase,uppercase letters and numbers.
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="name">Confirm Password</label>
+        <input
+          type="password"
+          class="form-control"
+          required
+          ngModel
+          name="confirmPwd"
+          pattern="{{ password.value}}"
+          minlength="8"
+          maxlength="20"
+          #confirmPwd="ngModel"
+        />
+      </div>
+      <div
+        class="error"
+        [hidden]="confirmPwd.valid || confirmPwd.pristine"
+        class="alert alert-danger"
+      >
+    
+        <div class="error" [hidden]="!confirmPwd.hasError('required')">
+            Password is required
+        </div>
+        <div class="error" [hidden]="!confirmPwd.hasError('pattern')">
+            does not match with the password.
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="name">Address</label>
+        <input
+          type="text"
+          class="form-control"
+          required
+          ngModel
+          name="address"
+          #address="ngModel"
+        />
+        <div
+          [hidden]="address.valid || address.pristine"
+          class="alert alert-danger"
+        >
+          <div class="error" [hidden]="!address.hasError('required')">
+            Address is required
+          </div>
+        
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="name">City</label>
+        <input
+          type="text"
+          class="form-control"
+          required
+          pattern="[a-zA-Z]|[a-zA-Z]"
+          ngModel
+          name="city"
+          #city="ngModel"
+        />
+        <div
+          [hidden]="city.valid || city.pristine"
+          class="alert alert-danger"
+        >
+          <div class="error" [hidden]="!city.hasError('required')">
+            City is required
+          </div>
+          <div class="error" [hidden]="!city.hasError('pattern')">
+            Only alphabets allowed
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="name">Country</label>
+        <input
+          type="text"
+          class="form-control"
+          required
+          pattern="[a-zA-Z]|[a-zA-Z]"
+          ngModel = "{{country}}"
+          name="country"
+          readonly
+        />
+      </div>
+      <span style="margin-left: 15%;">*Delivery available in India only</span>
+      <div class="form-group">
+        <label for="name">Pin Code</label>
+        <input
+          type="text"
+          class="form-control"
+          required
+          pattern="[0-9]*"
+          ngModel
+          name="pin"
+          minlength="6"
+          maxlength="6"
+          #pin="ngModel"
+        />
+        <div
+          [hidden]="pin.valid || pin.pristine"
+          class="alert alert-danger"
+        >
+          <div class="error" [hidden]="!pin.hasError('required')">
+            Pin Code is required
+          </div>
+          <div class="error" [hidden]="!pin.hasError('pattern')">
+            Only numbers allowed
+          </div>
+          <div class="error" [hidden]="!pin.hasError('minlength')">
+            Pin code should be minimum 6 digit
+          </div>
+          <div class="error" [hidden]="!pin.hasError('maxlength')">
+            Pin Code should be maximum 6 digit
+          </div>
+        </div>
+      </div>
+
+      <button class="submit" type="submit" [disabled]="!addForm.form.valid">
+        Register
+      </button><br>
+    </form>
+      <span style="font-weight: 600;">Already have an account?</span>
+      <button (click)="signIn()">
+        Sign-in
+      </button>
+    
+  </div> 
+  

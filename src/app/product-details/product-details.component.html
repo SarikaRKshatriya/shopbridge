@@ -1,0 +1,88 @@
+
+
+  <div *ngIf="!loggiedIn" style="display:flex;">
+        <button (click)="login()" style="margin-left: 80%;margin-top: 20px;font-weight: 600;
+        font-size: 15px;">
+               Login
+       </button>
+       <button (click)="navigateToregister()" style="margin-top: 20px;font-weight: 600;
+       font-size: 15px;">
+               Register
+       </button>
+      
+    </div>
+    <div *ngIf="loggiedIn" style="display:flex;">
+        <button (click)="wishList()" style="margin-left: 80%;margin-top: 20px;font-weight: 600;
+        font-size: 15px;">
+               <i class="fa fa-heart"> Wish List</i>
+       </button>
+       <button (click)="cart()" style="margin-top: 20px;font-weight: 600;
+       font-size: 15px;">
+               <i class="fa fa-shopping-cart"> Cart</i>
+       </button>
+      
+    </div>
+  <div style="display: flex;">
+        <div style="width: 20%;">
+                <button class="accordion">Categories</button>
+                <div class="panel">
+                        <span class="categories-list" (click)="covidSpecials()">Covid Specials</span><br>
+                        <span class="categories-list" (click)="vitamins()">Vitamins</span><br>
+                        <span class="categories-list" (click)="diebetes()">Diebetes</span><br>
+                        <span class="categories-list" (click)="all()">All Products</span>
+                </div>
+        
+                 <button class="accordion">What's New?</button>
+                <div class="panel">
+                <p>To prevent the spread of COVID-19 protect yourself and others around you by knowing the facts and taking appropriate precautions - visit our covid specials category</p>
+                </div>
+                <button class="accordion">Bestsellers</button>
+                <div class="panel">
+                <p>N95 is recognized as a Bestsellers product.Please visit our covid specials to get one suitable for you.</p>
+                </div>
+          </div>
+          <div>   
+                <div class="search">
+                        <input type="text" placeholder="Enter medicine name" [(ngModel)]="searchInput" style="height: 15px !important;">
+                        <button (click)="searchProduct()"> <i class="fa fa-search"> Search</i></button>
+                </div>   
+                  
+                <div style="height: 800px;">
+                       
+                        <div style="float:right;font-size: 20px;color:#23bdc3;">
+                                <ng2-toasty></ng2-toasty>
+                        </div> 
+                        <div class="grid" id="list">
+                                <ul *ngFor="let product of productList | paginate: { itemsPerPage: pageSize, currentPage: currentPage,totalItems: total }">
+                                  <li><img src="assets/images/{{product.id}}.webp" width="150" height="200"></li>
+                                  <li>{{product.name}}</li>
+                                  <li>{{product.description}}</li>
+                                  <li><strong>₹{{product.price}}</strong></li>
+                                  <li><button (click)="addToCart(product.id)" style="width: auto;">Add to Cart</button>
+                                  <a (click)="addToWishlist(product.id)"><i class="fa fa-heart" style="color: #f36f25;margin-right: 10px;"></i> </a>
+                                </li>
+                                </ul>
+                              
+                              
+                            </div>
+                            
+                </div>
+              
+          </div>
+  </div>
+  <div style="margin-left: 40%;">
+        <pagination-controls  (pageChange)="currentPage = $event"></pagination-controls>
+      </div>
+  <div id="ask-login" class="del-modal">
+	<div class="del-modal-content">
+	  <div style="margin: 20px; text-align: center">
+		Please login to add item to cart/wishlist...
+	  </div>
+	  <div style="text-align: center">
+		<button class="delete-submit" (click)="modalClose()">OK</button>
+	  </div>
+	</div>
+  </div>
+ 
+
+  
